@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AStarT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FenetreGrapheSFMLAStar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoArete.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoAStar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoSommet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Outils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OutilsCarte.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AElement.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Arete.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GElement.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphe.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sommet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FenetreGrapheSFML.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InfosGrapheDessin.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Vecteur2D.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PElement.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Erreur.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AlgebreLineaire.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TransfoAffine2D.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrice22.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Reels.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Pacman3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAstarT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoAStar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OutilsCarte.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InfosGrapheDessin.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
