@@ -64,6 +64,7 @@ using namespace sf;
 */
 int main()
 {
+	bool testmillieur(int a);
 	/* chargement des polices de caractères */
 	unsigned int magenta = Color::Magenta.toInteger();		// récupère la couleur Magenta au format nombre entier non signé
 	unsigned int yellow = Color::Yellow.toInteger();
@@ -78,9 +79,9 @@ int main()
 	char ch;
 
 	Graphe<Peinture, VSommet> g1;	// création à vide
-	Sommet<VSommet> *pacman,*f1,*f2,*f3;
+	Sommet<VSommet> *pacman, *f1, *f2, *f3;
 	//pacman = g1.creeSommet((VSommet("Pacman", Vecteur2D(0.5,1.5), magenta)));
-	pacman = g1.creeSommet(VSommet("pacman",Vecteur2D(0.5,1.5),red));
+	pacman = g1.creeSommet(VSommet("pacman", Vecteur2D(0.5, 1.5), red));
 	f1 = g1.creeSommet(VSommet("fantome", Vecteur2D(3.5, 1.5), blue));
 	f2 = g1.creeSommet(VSommet("fantome", Vecteur2D(0.5, 2.5), blue));
 	f3 = g1.creeSommet(VSommet("fantome", Vecteur2D(3.5, 3.5), blue));
@@ -92,8 +93,8 @@ int main()
 	int i = 0;
 	int ligne = 0;
 	int colone = 0;
-	for (i = 0;i <36;i++) {
-		 
+	for (i = 0;i < 36;i++) {
+
 
 		//ligne = i%7;
 		/*if (ligne < 5) {
@@ -104,15 +105,15 @@ int main()
 			ligne =1;
 			colone++;
 			s.push_back(g1.creeSommet(VSommet("Mur", Vecteur2D(ligne, colone), magenta)));
-			 
+
 		}*/
-	 
-		if( ((i+1)%6==0)||(i%6==0)||(i<=5)||(i>29))
+
+		if (((i + 1) % 6 == 0) || (i % 6 == 0) || (i <= 5) || (i > 29))
 		{
-			s.push_back(g1.creeSommet(VSommet("Mur", Vecteur2D((i % 6)-0.5, (6 - i / 6)-0.5), magenta)));
+			s.push_back(g1.creeSommet(VSommet("Mur", Vecteur2D((i % 6) - 0.5, (6 - i / 6) - 0.5), magenta)));
 		}
 		else {
-			s.push_back(g1.creeSommet(VSommet("Soja", Vecteur2D((i % 6)-0.5, (6 - i / 6)-0.5), yellow)));
+			s.push_back(g1.creeSommet(VSommet("Soja", Vecteur2D((i % 6) - 0.5, (6 - i / 6) - 0.5), yellow)));
 		}
 		if (colone < 5) { colone++; }
 		if (colone >= 5) { ligne++;colone = 0; }
@@ -120,7 +121,7 @@ int main()
 
 	//------------------ on insère des nouveaux sommets isolés --------------------
 
-	 
+
 	//s0 = g1.creeSommet(VSommet("Kings Landing",Vecteur2D(100,700),magenta));
 	//s1 = g1.creeSommet(VSommet("Winterfell",Vecteur2D(100,200),magenta));
 	//s2 = g1.creeSommet(VSommet("DragonStone",Vecteur2D(400,400),magenta));
@@ -134,17 +135,17 @@ int main()
 	s4 = g1.creeSommet(VSommet("Volantis", Vecteur2D(5, 2), magenta));
 
 	*/
-	
+
 	//VSommet *s;
 	//s[0][0]= g1.creeSommet(VSommet("Mur", Vecteur2D(1, 1), magenta));
-	
+
 	/*s0 = g1.creeSommet(VSommet("Mur", Vecteur2D(1, 1),magenta));
 	s1 = g1.creeSommet(VSommet("Mur",Vecteur2D(2,1),yellow));
 	s2 = g1.creeSommet(VSommet("Mur", Vecteur2D(3, 1), yellow));
 	s3 = g1.creeSommet(VSommet("Mur", Vecteur2D(4, 1), yellow));
 	s4 = g1.creeSommet(VSommet("Mur", Vecteur2D(5, 1), yellow));
 	s5 = g1.creeSommet(VSommet("Mur", Vecteur2D(1, 1), magenta));
-	
+
 	s6 = g1.creeSommet(VSommet("Soja", Vecteur2D(1, 2), magenta));
 	s7 = g1.creeSommet(VSommet("Soja", Vecteur2D(2, 2), yellow));
 	s8= g1.creeSommet(VSommet("Soja", Vecteur2D(3, 2), yellow));
@@ -184,7 +185,7 @@ int main()
 	unsigned int tangerine2 = 0xFF7F00BF; // tangerine un peu transparent
 	unsigned int tangerine3 = 0xFF7F0060; // tangerine presque transparent
 	unsigned int tangerine4 = 0xFF7F0000; // tangerine  transparent
-
+ 
 
 	//unsigned int jauneOpaque
 
@@ -193,19 +194,47 @@ int main()
 	// unsigned int turquoise = Color(0,206,209).toInteger(); // ou en utilisant les fonctionnalités de la classe Color de la librairie SFML
 	vector<Arete<Peinture, VSommet> *>  a;
 	int changerligne = 0;
-	for (i = 0;i <=29;i++) {
-
+	for (i = 0;i <= 29;i++) {
 		if ((i + 1) % 6 == 0) { changerligne = 1; }
 		else { changerligne = 0; }
+		
 		if (changerligne == 0) {
 			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 1]));
-			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 7]));
+			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 6]));	
+		}
+		else {	 
 			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 6]));
-
+		
+		}
+	
+		if (i < 18) {
+			
+			if (!testmillieur( i)) {
+				if ((i + 2) % 6 == 0 || (i + 1) % 6 == 0) {
+					a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 5]));
+				}
+				else {
+					a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 7]));
+				}
+			}
 		}
 		else {
-			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 6]));
+			if (changerligne == 0) {
+				if ((i - 1) % 6 == 0 || (i - 2) % 6 == 0 || (i - 3) % 6 == 0) {
+					a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 5]));
+					if (testmillieur(i)) {
+						a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 7]));
+					}
+				 }
+				 
+				else {
+				if((i!=24) &&( i!=18) )	a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 7]));
+				}
+			}
 		}
+	
+	  
+	  
 	}
 	
 	for (i;i < 35;i++) {
@@ -253,4 +282,18 @@ int main()
 		fenetreGraphe.fenetre.display();
 	}
 	return 0;
+}
+
+bool testmillieur(int i) {
+	switch (i) {
+	case 3: return true;break;
+	case 15:return true;break;
+	case 9:return true;break;
+	case 21:return true;break;
+	case 27:return true;break;
+	case 33:return true;break;
+
+
+	}
+	return false;
 }
