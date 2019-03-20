@@ -6,7 +6,7 @@ Test des fonctionnalités de PElement : la classe template représentant des liste
 #include <iostream>
 #include <string>
 #include <stdlib.h>
-#include <PElement.h>
+#include "PElement.h"
 
 using namespace std;
 
@@ -100,12 +100,12 @@ cout <<"test de la méthode dépiler() ? " << endl; cin >> ch;
 
 double * p1 = PElement<double>::depiler(l1);
 
-cout << "l1 a été dépilée, l1 = " << l1 << endl;
+cout << "l1 a ét?dépilée, l1 = " << l1 << endl;
 cout << "la valeur extraite est : " << *p1 << endl;
 
 string * p2 = PElement<string>::depiler(l2);
 
-cout << "l2 a été dépilée, l2 = " << l2 << endl;
+cout << "l2 a ét?dépilée, l2 = " << l2 << endl;
 cout << "la valeur extraite est : " << *p2 << endl;
 
 cout <<"test de la méthode retire()  ? " << endl; cin >> ch;
@@ -114,37 +114,37 @@ bool ok1 = PElement<double>::retire(&y2,l1);
 
 bool ok2 = PElement<string>::retire(&s1,l2);
 
-if (ok1) cout << y2 << " a été retirée de l1, à présent l1 = " << l1 << endl;
+if (ok1) cout << y2 << " a ét?retirée de l1, ?présent l1 = " << l1 << endl;
 
-if (ok2) cout << s1 << " a été retirée de l2, à présent l2 = " << l2 << endl;
+if (ok2) cout << s1 << " a ét?retirée de l2, ?présent l2 = " << l2 << endl;
 
 cout <<"test de la méthode efface1() ?" << endl; cin >> ch;
 
 PElement<double>::efface1(l1);
 
-cout << "l1 a été effacée avec efface1(), à présent l1 = " << l1 << endl;
+cout << "l1 a ét?effacée avec efface1(), ?présent l1 = " << l1 << endl;
 
 PElement<string>::efface1(l2);
 
-cout << "l2 a été effacée avec efface1(), à présent l2 = " << l2 << endl;
+cout << "l2 a ét?effacée avec efface1(), ?présent l2 = " << l2 << endl;
 
 cout <<"test de la méthode efface2()  ?" << endl; cin >> ch;
 
 l1 = new PElement<double>( new double(2),new PElement<double>(new double(7),new PElement<double>(new double(13),NULL)));
 
-cout << " l1 a été re-créée avec des valeurs allouées dynamiquement,"<< endl << " l1 = "<<l1 << endl;
+cout << " l1 a ét?re-créée avec des valeurs allouées dynamiquement,"<< endl << " l1 = "<<l1 << endl;
 
 l2 = new PElement<string>(new string("rene"),new PElement<string>(new string("la"),new PElement<string>(new string("taupe"),NULL)));
 
-cout << " l2 a été re-créée avec des valeurs allouées dynamiquement,"<< endl << " l2 = "<<l2 << endl;
+cout << " l2 a ét?re-créée avec des valeurs allouées dynamiquement,"<< endl << " l2 = "<<l2 << endl;
 
 PElement<double>::efface2(l1);
 
-cout << "l1 a été effacée avec efface2(), à présent l1 = " << l1 << endl;
+cout << "l1 a ét?effacée avec efface2(), ?présent l1 = " << l1 << endl;
 
 PElement<string>::efface2(l2);
 
-cout << "l2 a été effacée avec efface2(), à présent l2 = " << l2 << endl;
+cout << "l2 a ét?effacée avec efface2(), ?présent l2 = " << l2 << endl;
 
 {
 cout <<"test de la méthode static const PElement< T > * appartient( const T * a, const PElement<T> * l); ? " << endl; cin >> ch;

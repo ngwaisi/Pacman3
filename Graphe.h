@@ -1,3 +1,7 @@
+
+#ifndef GRAPHE_H
+#define GRAPHE_H
+
 #pragma once
 
 /**
@@ -632,3 +636,4 @@ return fenetre.finitDessin(*this);
 
 
 
+#endif

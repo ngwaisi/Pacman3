@@ -11,7 +11,7 @@ Test de A * sur une carte routi鑢e
 #include "Sommet.h"
 #include"InfoArete.h"
 #include "Arete.h"
-
+//#include "Graphe"
 #include "Graphe.h"
 #include "AStarT.h"
 #include "Outils.h"
@@ -21,153 +21,236 @@ Test de A * sur une carte routi鑢e
 #include "SFML/Window/Event.hpp"
 #include <stdlib.h>
 #include <SFML/Graphics/Font.hpp>
-
+#include <SFML\Graphics\Color.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+//#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Mouse.hpp>
+//#include <SFML/Graphics/Font.hpp>
 #include <string>
 #include "Vecteur2D.h"
 #include "PElement.h"
+#include "InfosGrapheDessin.h"
+using namespace std;
+using namespace sf;
+
+/*
+
+Test de l'opération dessiner un graphe planaire
+
+L'info associée aux sommets est un VSommet (nom, position, couleur)  (par exemple)
+L'info associée aux arêtes est une combinaison de 2 couleurs : une de fond et une superficielle plus ou moins transparente (par exemple)
+
+*/
+/*
+#include <iostream>
+#include <sstream>
+#include <string>
+
+#include <SFML\Graphics\Color.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <SFML/Graphics/Font.hpp>
+
+#include <Graphe.h>
+#include <FenetreGrapheSFML.h>
+#include <InfosGrapheDessin.h>
 
 using namespace std;
 using namespace sf;
 
+*/
 int main()
 {
-	cout << "essai de AStarT" << endl;
-
-	Sommet<InfoSommet> * sA, *sB, *sC, *sD, *sE, *sF, *sG;
-
-	Arete<InfoArete, InfoSommet> * aAB, *aAC, *aAD, *aBC, *aCD, *aCE, *aCF, *aDE, *aDF, *aEF;
-
-	//-------------------- cr閍tion d'un graphe repr閟entant une carte routi鑢e -----------------------------
-
-	Graphe<InfoArete, InfoSommet> graphe;
-
-	//------------------  insertion des sommets -------------------------------
-
-	unsigned int vert = 0x00FF00FF; // vert opaque : couleur des sommets
-
-	sA = graphe.creeSommet(InfoSommet(VSommet("A", Vecteur2D(6, 8), vert), InfoAStar())); 		// Sommet<T> * creeSommet(const T & info);
-	sB = graphe.creeSommet(InfoSommet(VSommet("B", Vecteur2D(7, 3), vert), InfoAStar()));
-	sC = graphe.creeSommet(InfoSommet(VSommet("C", Vecteur2D(5, 1), vert), InfoAStar()));
-	sD = graphe.creeSommet(InfoSommet(VSommet("D", Vecteur2D(2, 4), vert), InfoAStar()));
-	sE = graphe.creeSommet(InfoSommet(VSommet("E", Vecteur2D(1, 1), vert), InfoAStar()));
-	sF = graphe.creeSommet(InfoSommet(VSommet("F", Vecteur2D(3, 2), vert), InfoAStar()));
-	sG = graphe.creeSommet(InfoSommet(VSommet("G", Vecteur2D(3, 8), vert), InfoAStar()));
-
-	//------------------------ insertion des ar阾es ------------------------------------
-
-	//aAB = graphe.creeArete(sA,sB,double(OutilsCarte::distance(sA,sB)));
-	//aAC = graphe.creeArete(sA,sC,double(OutilsCarte::distance(sA,sC)));
-	//aAD = graphe.creeArete(sA,sD,double(OutilsCarte::distance(sA,sD)));
-	//aBC = graphe.creeArete(sB,sC,double(OutilsCarte::distance(sB,sC)));
-	//aCD = graphe.creeArete(sC,sD,double(OutilsCarte::distance(sC,sD)));
-	//aCE = graphe.creeArete(sC,sE,double(OutilsCarte::distance(sC,sE)));
-	//aCF = graphe.creeArete(sC,sF,double(OutilsCarte::distance(sC,sF)));
-	//aDE = graphe.creeArete(sD,sE,double(OutilsCarte::distance(sD,sE)));
-	//aDF = graphe.creeArete(sD,sF,double(OutilsCarte::distance(sD,sF)));
-	//aEF = graphe.creeArete(sE,sF,double(OutilsCarte::distance(sE,sF)));
-
-	aAB = OutilsCarte::creeArete(sA, sB, graphe);
-	aAC = OutilsCarte::creeArete(sA, sC, graphe);
-	aAD = OutilsCarte::creeArete(sA, sD, graphe);
-	aBC = OutilsCarte::creeArete(sB, sC, graphe);
-	aCD = OutilsCarte::creeArete(sC, sD, graphe);
-	aCE = OutilsCarte::creeArete(sC, sE, graphe);
-	aCF = OutilsCarte::creeArete(sC, sF, graphe);
-	aDE = OutilsCarte::creeArete(sD, sE, graphe);
-	aDF = OutilsCarte::creeArete(sD, sF, graphe);
-	aEF = OutilsCarte::creeArete(sE, sF, graphe);
-
-	cout << "la carte routi鑢e cr殚e est :" << endl << graphe << endl;
-
-	char ch; cin >> ch;
-	cout << "les ar阾es adjacentes de de C sont : " << endl << graphe.aretesAdjacentes(sC);
-	cout << "les ar阾es adjacentes de de F sont : " << endl << graphe.aretesAdjacentes(sF);
-	cout << "les ar阾es adjacentes de de G sont : " << endl << graphe.aretesAdjacentes(sG);
-	cin >> ch;
-	cout << endl;
-
-	cout << "les voisins de de C sont : " << endl << graphe.voisins(sC);
-	cout << "les voisins de de F sont : " << endl << graphe.voisins(sF);
-	cout << "les voisins de de G sont : " << endl << graphe.voisins(sG);
-	cin >> ch;
-	cout << endl;
-	cout << "les adjacences de de C sont : " << endl << graphe.adjacences(sC);
-
-	cin >> ch;
-
-	Sommet<InfoSommet> * depart = sA;
-	OutilsCarte::cible = sG;
-	Sommet<InfoSommet> * resultat;
-
-	resultat = AStarT< Graphe<InfoArete, InfoSommet>, Sommet<InfoSommet> >::aStar(graphe, depart, OutilsCarte::hh);
-
-	cout << "succes = " << (resultat != NULL) << endl;
-
-	cout << "la carte routi鑢e apr鑣 recherche du chemin de sA ?sG par A* est :" << endl << graphe << endl;
-
-	cin >> ch;
-
-	OutilsCarte::cible = sE;
-
-	resultat = AStarT< Graphe<InfoArete, InfoSommet>, Sommet<InfoSommet> >::aStar(graphe, depart, OutilsCarte::hh);
-
-	cout << "succes = " << (resultat != NULL) << endl;
-
-	cout << "la carte routi鑢e apr鑣 recherche du chemin de sA ?sE par A* est :" << endl << graphe << endl;
-	cin >> ch;
-
-	PElement<Sommet<InfoSommet>> * c;
-	chemin(sE, c);					// construit le chemin c qui part de SA vers SE ?partir de la liste "p鑢e" produite par A*
-
-	cout << "le chemin trouv?de de sA ?sE par A* est :" << endl << c << endl;
-	cin >> ch;
-
-	string titre("Recherche d'un chemin dans un graphe ?l'aide de l'algo A*");
-
-	//Vecteur2D  coinBG(0,hauteur), coinHD(largeur,0);
-
-	unsigned int fondCarte = 0xEFEFEFFF;	// sorte de gris clair ~= 閠ain pur
-
-	Vecteur2D  coinBG(-1, -1);
-	Vecteur2D  coinHD(10, 10);
-
-	int largeur = 800, hauteur = 400;
+	/* chargement des polices de caractères */
+	unsigned int magenta = Color::Magenta.toInteger();		// récupère la couleur Magenta au format nombre entier non signé
+	unsigned int yellow = Color::Yellow.toInteger();
+	unsigned int red = Color::Red.toInteger();
+	unsigned int blue = Color::Blue.toInteger();
 	Font font1, font2;
-	string cheminFontes = "..\\..\\graphes\\mespolices\\";
-	string nomFichierFonte1 = cheminFontes + "abaddon.ttf";
-	string nomFichierFonte2 = cheminFontes + "ActionManBoldItalic.ttf";
+	string nomFichierFonte1 = "..\\mespolices\\abaddon.ttf";
+	string nomFichierFonte2 = "..\\mespolices\\ActionManBoldItalic.ttf";
 	bool ok = font1.loadFromFile(nomFichierFonte1);
 	ok = font2.loadFromFile(nomFichierFonte2);
-	FenetreGrapheSFMLAvecAxesRepereMonde fenetreGraphe(titre, fondCarte, coinBG, coinHD, largeur, hauteur, font2, font2);
 
-	ok = graphe.dessineToutesAretes(fenetreGraphe);
+	char ch;
 
-	unsigned int couleurChemin = 0xFF0000FF;	// rouge opaque
+	Graphe<Peinture, VSommet> g1;	// création à vide
+	Sommet<VSommet> *pacman,*f1,*f2,*f3;
+	//pacman = g1.creeSommet((VSommet("Pacman", Vecteur2D(0.5,1.5), magenta)));
+	pacman = g1.creeSommet(VSommet("pacman",Vecteur2D(0.5,1.5),red));
+	f1 = g1.creeSommet(VSommet("fantome", Vecteur2D(3.5, 1.5), blue));
+	f2 = g1.creeSommet(VSommet("fantome", Vecteur2D(0.5, 2.5), blue));
+	f3 = g1.creeSommet(VSommet("fantome", Vecteur2D(3.5, 3.5), blue));
+	//	Sommet<VSommet> * s0, *s1, *s2, *s3, *s4,*s5,*s6,*s7,*s8,*s9,*s10,*s11,*s12,*s13,*s14,*s15,*s16,*s17,*s18,*s19,*s20,*s21,*s22,*s23,*s24,*s25,*s26;
+	vector<Sommet<VSommet> *>  s;
 
-	ok = dessine(c, fenetreGraphe, couleurChemin);	// dessine le chemin trouv?par l'algo A*
 
-	ok = graphe.dessineTousSommets(fenetreGraphe);
 
-	ok = graphe.dessine(fenetreGraphe);
+	int i = 0;
+	int ligne = 0;
+	int colone = 0;
+	for (i = 0;i <36;i++) {
+		 
 
-	cout << "graphe dessin?? " << (ok ? "succ鑣" : "閏hec") << endl;
+		//ligne = i%7;
+		/*if (ligne < 5) {
+			s.push_back(g1.creeSommet(VSommet("Mur", Vecteur2D(ligne, colone), yellow)));
+			ligne += 1;
+		}
+		else {
+			ligne =1;
+			colone++;
+			s.push_back(g1.creeSommet(VSommet("Mur", Vecteur2D(ligne, colone), magenta)));
+			 
+		}*/
+	 
+		if( ((i+1)%6==0)||(i%6==0)||(i<=5)||(i>29))
+		{
+			s.push_back(g1.creeSommet(VSommet("Mur", Vecteur2D((i % 6)-0.5, (6 - i / 6)-0.5), magenta)));
+		}
+		else {
+			s.push_back(g1.creeSommet(VSommet("Soja", Vecteur2D((i % 6)-0.5, (6 - i / 6)-0.5), yellow)));
+		}
+		if (colone < 5) { colone++; }
+		if (colone >= 5) { ligne++;colone = 0; }
+	}
 
+	//------------------ on insère des nouveaux sommets isolés --------------------
+
+	 
+	//s0 = g1.creeSommet(VSommet("Kings Landing",Vecteur2D(100,700),magenta));
+	//s1 = g1.creeSommet(VSommet("Winterfell",Vecteur2D(100,200),magenta));
+	//s2 = g1.creeSommet(VSommet("DragonStone",Vecteur2D(400,400),magenta));
+	//s3 = g1.creeSommet(VSommet("The wall",Vecteur2D(300,100),magenta));
+	//s4 = g1.creeSommet(VSommet("Volantis",Vecteur2D(500,600),magenta));
+
+   /*	s0 = g1.creeSommet(VSommet("Kings Landing", Vecteur2D(1, 1), magenta));
+	s1 = g1.creeSommet(VSommet("Winterfell", Vecteur2D(1, 4), magenta));
+	s2 = g1.creeSommet(VSommet("DragonStone", Vecteur2D(3, 3), magenta));
+	s3 = g1.creeSommet(VSommet("The wall", Vecteur2D(2, 5), magenta));
+	s4 = g1.creeSommet(VSommet("Volantis", Vecteur2D(5, 2), magenta));
+
+	*/
+	
+	//VSommet *s;
+	//s[0][0]= g1.creeSommet(VSommet("Mur", Vecteur2D(1, 1), magenta));
+	
+	/*s0 = g1.creeSommet(VSommet("Mur", Vecteur2D(1, 1),magenta));
+	s1 = g1.creeSommet(VSommet("Mur",Vecteur2D(2,1),yellow));
+	s2 = g1.creeSommet(VSommet("Mur", Vecteur2D(3, 1), yellow));
+	s3 = g1.creeSommet(VSommet("Mur", Vecteur2D(4, 1), yellow));
+	s4 = g1.creeSommet(VSommet("Mur", Vecteur2D(5, 1), yellow));
+	s5 = g1.creeSommet(VSommet("Mur", Vecteur2D(1, 1), magenta));
+	
+	s6 = g1.creeSommet(VSommet("Soja", Vecteur2D(1, 2), magenta));
+	s7 = g1.creeSommet(VSommet("Soja", Vecteur2D(2, 2), yellow));
+	s8= g1.creeSommet(VSommet("Soja", Vecteur2D(3, 2), yellow));
+	s9 = g1.creeSommet(VSommet("Soja", Vecteur2D(4, 2), yellow));
+	s10 = g1.creeSommet(VSommet("Soja", Vecteur2D(5, 2), yellow));
+	s11= g1.creeSommet(VSommet("Mur", Vecteur2D(6, 2), magenta));
+
+	s12= g1.creeSommet(VSommet("Mur", Vecteur2D(1, 3), magenta));
+	s13 = g1.creeSommet(VSommet("Soja", Vecteur2D(2, 3), yellow));
+	s14= g1.creeSommet(VSommet("Soja", Vecteur2D(3, 3), yellow));
+	s15 = g1.creeSommet(VSommet("Soja", Vecteur2D(4, 3), yellow));
+	s16 = g1.creeSommet(VSommet("Soja", Vecteur2D(5, 3), magenta));
+
+	s17 = g1.creeSommet(VSommet("Soja", Vecteur2D(1, 4), magenta));
+	s18 = g1.creeSommet(VSommet("Soja", Vecteur2D(2, 4), yellow));
+	s19 = g1.creeSommet(VSommet("Soja", Vecteur2D(3, 4), yellow));
+	s20 = g1.creeSommet(VSommet("Soja", Vecteur2D(4, 4), yellow));
+	s21 = g1.creeSommet(VSommet("Soja", Vecteur2D(5, 4), magenta));
+
+	s22= g1.creeSommet(VSommet("Soja", Vecteur2D(1, 5), magenta));
+	s23 = g1.creeSommet(VSommet("Soja", Vecteur2D(2, 5), yellow));
+	s24 = g1.creeSommet(VSommet("Soja", Vecteur2D(3, 5), yellow));
+	s25 = g1.creeSommet(VSommet("Soja", Vecteur2D(4, 5), yellow));
+	s26 = g1.creeSommet(VSommet("Soja", Vecteur2D(5, 5), magenta));
+	*/
+	//----------------- on connecte certains sommets -------------------
+
+	//Arete<Peinture, VSommet> * a0, *a1, *a2, *a3, *a4;
+
+	unsigned int jaune0 = 0xDFFF00FF;   // jaune opaque
+	unsigned int jaune1 = 0xDFFF00C0;   // jaune presque opaque
+	unsigned int jaune2 = 0xDFFF0064;   // jaune un peu transparent
+	unsigned int jaune3 = 0xDFFF0020;	// jaune presque transparent
+
+	unsigned int tangerine0 = 0xFF7F00FF; // tangerine opaque
+	unsigned int tangerine1 = 0xFF7F00DF; // tangerine presque opaque
+	unsigned int tangerine2 = 0xFF7F00BF; // tangerine un peu transparent
+	unsigned int tangerine3 = 0xFF7F0060; // tangerine presque transparent
+	unsigned int tangerine4 = 0xFF7F0000; // tangerine  transparent
+
+
+	//unsigned int jauneOpaque
+
+	unsigned int turquoise = 0x00CED1FF;	// couleur turquoise opaque. préfixe 0x pour héxadécimal. format RGBA
+	unsigned int vertCitron = 0x00FF00FF;
+	// unsigned int turquoise = Color(0,206,209).toInteger(); // ou en utilisant les fonctionnalités de la classe Color de la librairie SFML
+	vector<Arete<Peinture, VSommet> *>  a;
+	int changerligne = 0;
+	for (i = 0;i <=29;i++) {
+
+		if ((i + 1) % 6 == 0) { changerligne = 1; }
+		else { changerligne = 0; }
+		if (changerligne == 0) {
+			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 1]));
+			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 7]));
+			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 6]));
+
+		}
+		else {
+			a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 6]));
+		}
+	}
+	
+	for (i;i < 35;i++) {
+		a.push_back(g1.creeArete(Peinture(vertCitron, tangerine0), s[i], s[i + 1]));
+	}
+	/*a0 = g1.creeArete(Peinture(vertCitron, tangerine0), s2, s1);
+	a1 = g1.creeArete(Peinture(vertCitron, tangerine1), s3, s2);
+	a2 = g1.creeArete(Peinture(vertCitron, tangerine2), s1, s3);
+	a3 = g1.creeArete(Peinture(vertCitron, tangerine3), s0, s1);
+	a4 = g1.creeArete(Peinture(vertCitron, tangerine4), s0, s4);
+	*/
+	//------------------ on dessine le graphe ----------------
+
+	cout << "le graphe créé g1 est :" << endl << g1 << endl;
+	//cin >> ch;
+
+	string titre("The seven kingdoms");
+	int largeur = 1500, hauteur = 1000;
+	//Vecteur2D  coinBG(0,hauteur), coinHD(largeur,0);
+
+	Vecteur2D  coinBG(-0.8, -0.8), coinHD(6, 6);
+
+	unsigned int fondCarte = 0xEFEFEFFF;	// sorte de gris clair ~= étain pur
+
+	//FenetreGrapheSFML fenetreGraphe( titre, fondCarte, coinBG, coinHD, largeur, hauteur, font1);
+	FenetreGrapheSFMLAvecAxesRepereMonde fenetreGraphe(titre, fondCarte, coinBG, coinHD, largeur, hauteur, font1, font2);
+	ok = g1.dessine(fenetreGraphe);
+	cout << "123";
+	cout << "graphe dessiné ? " << (ok ? "succès" : "échec") << endl;
+	cout << "123";
 	fenetreGraphe.fenetre.display();
-	//cout << "apr鑣 display" << endl;
 
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "S");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
-	//boucle infinie de contr鬺e des 関鑞ements de la fen阾re
+	//boucle infinie de contrôle des évènements de la fenêtre
 	while (fenetreGraphe.fenetre.isOpen())
 	{
 		Event event;
 		while (fenetreGraphe.fenetre.pollEvent(event))
 		{
+
 			if (event.type == Event::Closed) /*(event.type == Event::EventType::Closed)*/
 				fenetreGraphe.fenetre.close();
 		}
+		//window.clear();
+		ok=g1.dessine(fenetreGraphe);
+		fenetreGraphe.fenetre.display();
 	}
-
 	return 0;
 }
