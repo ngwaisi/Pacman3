@@ -68,7 +68,7 @@ int main()
 	string nomFichierFonte2 = "..\\mespolices\\ActionManBoldItalic.ttf";
 	bool ok = font1.loadFromFile(nomFichierFonte1);
 	ok = font2.loadFromFile(nomFichierFonte2);
-
+	 
 	char ch;
 
 	Graphe<Peinture, VSommet> g1;	// création à vide
@@ -76,7 +76,7 @@ int main()
 	//pacman = g1.creeSommet((VSommet("Pacman", Vecteur2D(0.5,1.5), magenta)));
 	pacman = g1.creeSommet(VSommet("pacman", Vecteur2D(0.5, 1.5), red));
 	f1 = g1.creeSommet(VSommet("fantome", Vecteur2D(3.5, 1.5), blue));
-	f2 = g1.creeSommet(VSommet("fantome", Vecteur2D(1.5, 2.5), blue));
+	f2 = g1.creeSommet(VSommet("fantome", Vecteur2D(2.5, 2.5), blue));
 	f3 = g1.creeSommet(VSommet("fantome", Vecteur2D(3.5, 3.5), blue));
 	//	Sommet<VSommet> * s0, *s1, *s2, *s3, *s4,*s5,*s6,*s7,*s8,*s9,*s10,*s11,*s12,*s13,*s14,*s15,*s16,*s17,*s18,*s19,*s20,*s21,*s22,*s23,*s24,*s25,*s26;
 	vector<Sommet<VSommet> *>  s;
@@ -243,7 +243,7 @@ int main()
 	Vecteur2D  coinBG(-0.8, -0.8), coinHD(6, 6);
 
 	unsigned int fondCarte = 0xEFEFEFFF;	// sorte de gris clair ~= étain pur
-
+	
 	//FenetreGrapheSFML fenetreGraphe( titre, fondCarte, coinBG, coinHD, largeur, hauteur, font1);
 	FenetreGrapheSFMLAvecAxesRepereMonde fenetreGraphe(titre, fondCarte, coinBG, coinHD, largeur, hauteur, font1, font2);
 	ok = g1.dessine(fenetreGraphe);
@@ -271,9 +271,7 @@ int main()
 		delta += newTime - lastTime;
 		if (delta > 1000) {
 			clock.restart();
-		//	cout << "degre"<<f1->degre;
-		//	cout << f2->degre;
-		//	cout << f3->degre;
+		
 			deplacementRandom(f1,s);
 			deplacementRandom(f2,s);
 			deplacementRandom(f3,s);
@@ -315,7 +313,7 @@ int main()
 				}
 				if (codeTouche == Keyboard::A) {
 					//g1.lSommets->v->v.p.y -= 1;
-					pacman->v.p.y -= 1;
+					pacman->v.p.x -= 1;
 				}
 				if (codeTouche == Keyboard::D) {
 					//g1.lSommets->v->v.p.x += 1;
@@ -342,6 +340,19 @@ int main()
 				}
 			}
 		}
+
+		////////////////////////////////
+		for (i = 0; i < 36; i++) {
+			Vecteur2D temp1 = Vecteur2D((i % 6) - 0.5, (6 - i / 6) - 0.5);
+			if (pacman->v.p == temp1) {
+			//	g1.creeSommet(VSommet("Soja", temp1, Color::Black.toInteger));
+				int res = Color::Black.toInteger();
+				s[i]->v.couleur = res;
+			}
+		}
+
+
+
 		//window.clear();
 		ok = g1.dessine(fenetreGraphe);
 		fenetreGraphe.fenetre.display();
@@ -367,214 +378,288 @@ bool testmillieur(int i) {
 void deplacementRandom(Sommet<VSommet> *sommet, vector<Sommet<VSommet> *>s) {
 	 int r;
 	//int r = rand() % sommet->degre + 1;
-	//int r = rand() % sommet->degre + 1;
+	
 	 if (sommet->v.p.x == s[15]->v.p.x) { r = rand() % 8 + 1; }
-	 else { r = rand() % 6 + 1; }
-	if ((sommet->v.p.x < 2.5 && sommet->v.p.y > 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y < 2.5)) {
-		switch (r) {
-		case 1: sommet->v.p.x -= 1;
-			break;
-		case 2: sommet->v.p.x -= 1;
-			sommet->v.p.y += 1;
-			break;
-		case 3: sommet->v.p.y += 1;
-			break;
-		case 4: sommet->v.p.x += 1;
-			break;
-		case 5: sommet->v.p.x += 1;
-			sommet->v.p.y -= 1;
-			break;
-		case 6: sommet->v.p.y -= 1;
-			break;
-		}
-	}
-	else {
-		if ((sommet->v.p.x < 2.5 && sommet->v.p.y < 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y > 2.5)) {
-			switch (r) {
-			case 1: sommet->v.p.x -= 1;
-				break;
-			case 2: sommet->v.p.x -= 1;
-				sommet->v.p.y -= 1;
-				break;
-			case 3: sommet->v.p.y += 1;
-				break;
-			case 4: sommet->v.p.x += 1;
-				break;
-			case 5: sommet->v.p.x += 1;
-				sommet->v.p.y += 1;
-				break;
-			case 6: sommet->v.p.y -= 1;
-				break;
-			}
-		}
-		else {
-			if (sommet->v.p.x < 2.5 && sommet->v.p.y == 2.5) {
-				switch (r) {
-				case 1: sommet->v.p.x -= 1;
-					break;
-				case 2: sommet->v.p.x -= 1;
-					sommet->v.p.y += 1;
-					break;
-				case 3: sommet->v.p.y += 1;
-					break;
-				case 4: sommet->v.p.x += 1;
-					break;
-				case 5: sommet->v.p.x -= 1;
-					sommet->v.p.y -= 1;
-					break;
-				case 6: sommet->v.p.y -= 1;
-					break;
-				}
-			}
-			else {
-				if (sommet->v.p.x > 2.5 && sommet->v.p.y == 2.5) {
-					switch (r) {
-					case 1: sommet->v.p.x -= 1;
-						break;
-					case 2: sommet->v.p.x += 1;
-						sommet->v.p.y += 1;
-						break;
-					case 3: sommet->v.p.y += 1;
-						break;
-					case 4: sommet->v.p.x += 1;
-						break;
-					case 5: sommet->v.p.x += 1;
-						sommet->v.p.y -= 1;
-						break;
-					case 6: sommet->v.p.y -= 1;
-						break;
-					}
-				}
-				else {
-					if (sommet->v.p.x < 2.5 && sommet->v.p.y == 2.5) {
-						switch (r) {
-						case 1: sommet->v.p.x -= 1;
-							break;
-						case 2: sommet->v.p.x += 1;
-							sommet->v.p.y += 1;
-							break;
-						case 3: sommet->v.p.y += 1;
-							break;
-						case 4: sommet->v.p.x += 1;
-							break;
-						case 5: sommet->v.p.x -= 1;
-							sommet->v.p.y -= 1;
-							break;
-						case 6: sommet->v.p.y -= 1;
-							break;
-						case 7: sommet->v.p.x -= 1;
-							sommet->v.p.y += 1;
-							break;
-						case 8: sommet->v.p.x += 1;
-							sommet->v.p.y -= 1;
-							break;
-						}
-					}
-				}
-			}
-		}
-	}	if ((sommet->v.p.x < 2.5 && sommet->v.p.y > 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y < 2.5)) {
-		switch (r) {
-		case 1: sommet->v.p.x -= 1;
-			break;
-		case 2: sommet->v.p.x -= 1;
-			sommet->v.p.y += 1;
-			break;
-		case 3: sommet->v.p.y += 1;
-			break;
-		case 4: sommet->v.p.x += 1;
-			break;
-		case 5: sommet->v.p.x += 1;
-			sommet->v.p.y -= 1;
-			break;
-		case 6: sommet->v.p.y -= 1;
-			break;
-		}
-	}
-	else {
-		if ((sommet->v.p.x < 2.5 && sommet->v.p.y < 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y > 2.5)) {
-			switch (r) {
-			case 1: sommet->v.p.x -= 1;
-				break;
-			case 2: sommet->v.p.x -= 1;
-				sommet->v.p.y -= 1;
-				break;
-			case 3: sommet->v.p.y += 1;
-				break;
-			case 4: sommet->v.p.x += 1;
-				break;
-			case 5: sommet->v.p.x += 1;
-				sommet->v.p.y += 1;
-				break;
-			case 6: sommet->v.p.y -= 1;
-				break;
-			}
-		}
-		else {
-			if (sommet->v.p.x < 2.5 && sommet->v.p.y == 2.5) {
-				switch (r) {
-				case 1: sommet->v.p.x -= 1;
-					break;
-				case 2: sommet->v.p.x -= 1;
-					sommet->v.p.y += 1;
-					break;
-				case 3: sommet->v.p.y += 1;
-					break;
-				case 4: sommet->v.p.x += 1;
-					break;
-				case 5: sommet->v.p.x -= 1;
-					sommet->v.p.y -= 1;
-					break;
-				case 6: sommet->v.p.y -= 1;
-					break;
-				}
-			}
-			else {
-				if (sommet->v.p.x > 2.5 && sommet->v.p.y == 2.5) {
-					switch (r) {
-					case 1: sommet->v.p.x -= 1;
-						break;
-					case 2: sommet->v.p.x += 1;
-						sommet->v.p.y += 1;
-						break;
-					case 3: sommet->v.p.y += 1;
-						break;
-					case 4: sommet->v.p.x += 1;
-						break;
-					case 5: sommet->v.p.x += 1;
-						sommet->v.p.y -= 1;
-						break;
-					case 6: sommet->v.p.y -= 1;
-						break;
-					}
-				}
-				else {
-					if (sommet->v.p.x < 2.5 && sommet->v.p.y == 2.5) {
-						switch (r) {
-						case 1: sommet->v.p.x -= 1;
-							break;
-						case 2: sommet->v.p.x += 1;
-							sommet->v.p.y += 1;
-							break;
-						case 3: sommet->v.p.y += 1;
-							break;
-						case 4: sommet->v.p.x += 1;
-							break;
-						case 5: sommet->v.p.x -= 1;
-							sommet->v.p.y -= 1;
-							break;
-						case 6: sommet->v.p.y -= 1;
-							break;
-						case 7: sommet->v.p.x -= 1;
-							sommet->v.p.y += 1;
-							break;
-						case 8: sommet->v.p.x += 1;
-							sommet->v.p.y -= 1;
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
+	 
+	 else if (sommet->v.p.x == s[9]->v.p.x) { r = rand() % 5 + 1; }
+	    //    else if (sommet->v.p.x == s[27]->v.p.x) { r = rand() % 6 + 1; }
+	                 else { r = rand() % 6 + 1; }
+	
+	// if (sommet->v.p.x<3.5  && sommet->v.p.y>1.5) {
+		 if ((sommet->v.p.x < 2.5 && sommet->v.p.y > 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y < 2.5)) {
+			 switch (r) {
+			 case 1: if(sommet->v.p.x>0.5) sommet->v.p.x -= 1;
+				 break;
+			 case 2:if (sommet->v.p.x > 0.5 && (sommet->v.p.y < 3.5))
+			 {
+				 sommet->v.p.x -= 1;
+				 sommet->v.p.y += 1;
+			 } break;
+			 case 3:  if (sommet->v.p.y < 3.5 )sommet->v.p.y += 1;
+				 break;
+			 case 4: if (sommet->v.p.x < 3.5) sommet->v.p.x += 1;
+				 break;
+			 case 5:  if (sommet->v.p.x < 3.5 &&  sommet->v.p.y>1.5)
+			 {
+				 sommet->v.p.x += 1;
+				 sommet->v.p.y -= 1;
+			 } break;
+			 case 6:if(sommet->v.p.y > 1.5) sommet->v.p.y -= 1;
+				 break;
+			 }
+		 }
+		 else {
+			 if ((sommet->v.p.x < 2.5 && sommet->v.p.y < 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y > 2.5)) {
+				 switch (r) {
+				 case 1: if (sommet->v.p.x > 0.5)  sommet->v.p.x -= 1;
+					 break;
+				 case 2: 
+					 if (sommet->v.p.x > 1.5  && sommet->v.p.y > 1.5)
+					 {
+						 sommet->v.p.x -= 1;
+						 sommet->v.p.y -= 1;
+					 }break;
+				 case 3: if (sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+					 break;
+				 case 4:  if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+					 break;
+				 case 5:
+					 if (sommet->v.p.x < 3.5 && sommet->v.p.y < 3.5)
+					 {
+						 sommet->v.p.x += 1;
+						 sommet->v.p.y += 1;
+					 }break;
+				 case 6:  if (sommet->v.p.y > 3.5)sommet->v.p.y -= 1;
+					 break;
+				 }
+			 }
+			 else {
+				 if (sommet->v.p.x < 3.5 && sommet->v.p.y == 2.5) {
+					 switch (r) {
+					 case 1:  if (sommet->v.p.x >1.5)sommet->v.p.x -= 1;
+						 break;
+					 case 2:
+						 if (sommet->v.p.x > 1.5 && sommet->v.p.x < 3.5)
+						 {
+							 sommet->v.p.x -= 1;
+							 sommet->v.p.y += 1;
+						 }break;
+					 case 3: 
+						 if(sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+						 break;
+					 case 4: if(sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+						 break;
+					 case 5: 
+						 if (sommet->v.p.x > 1.5 && sommet->v.p.y>1.5)
+						 {
+							 sommet->v.p.x -= 1;
+							 sommet->v.p.y -= 1;
+						 }break;
+					 case 6: if(sommet->v.p.y > 1.5)sommet->v.p.y -= 1;
+						 break;
+					 }
+				 }
+				 else {
+					 if (sommet->v.p.x > 3.5 && sommet->v.p.y == 2.5) {
+						 switch (r) {
+						 case 1: if(sommet->v.p.x > 1.5)sommet->v.p.x -= 1;
+							 break;
+						 case 2:
+							 if (sommet->v.p.x < 3.5 &&sommet->v.p.y < 3.5)
+							 {
+								 sommet->v.p.x += 1;
+								 sommet->v.p.y += 1;
+							 }break;
+						 case 3:if(sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+							 break;
+						 case 4: if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+							 break;
+						 case 5: 
+							 if ((sommet->v.p.x < 3.5) && (sommet->v.p.y > 1.5))
+							 {
+								 sommet->v.p.x += 1;
+								 sommet->v.p.y -= 1;
+							 } break;
+						 case 6:if (sommet->v.p.y > 1.5) sommet->v.p.y -= 1;
+							 break;
+						 }
+					 }
+					 else {
+						 if (sommet->v.p.x < 3.5 && sommet->v.p.y == 2.5) {
+							 switch (r) {
+							 case 1: if (sommet->v.p.x > 1.5)sommet->v.p.x -= 1;
+								 break;
+							 case 2: 
+								 if (sommet->v.p.y < 3.5 && (sommet->v.p.y < 3.5))
+								 {
+									 sommet->v.p.x += 1;
+									 sommet->v.p.y += 1;
+								 }break;
+							 case 3:if (sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+								 break;
+							 case 4: if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+								 break;
+							 case 5: 
+								 if (sommet->v.p.x > 1.5 && (sommet->v.p.y > 1.5))
+								 {
+									 sommet->v.p.x -= 1;
+									 sommet->v.p.y -= 1;
+								 }break;
+							 case 6: if (sommet->v.p.y > 1.5)sommet->v.p.y -= 1;
+								 break;
+							 case 7: 
+								 if (sommet->v.p.y < 3.5 && sommet->v.p.x > 1.5) {
+									 sommet->v.p.x -= 1;
+									 sommet->v.p.y += 1;
+								 }break;
+							 case 8: 
+								 if (sommet->v.p.y > 1.5 && sommet->v.p.x < 3.5) {
+									 sommet->v.p.x += 1;
+									 sommet->v.p.y -= 1;
+								 }break;
+							 }
+						 }
+					 }
+				 }
+			 }
+		 }	if ((sommet->v.p.x < 2.5 && sommet->v.p.y > 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y < 2.5)) {
+			 switch (r) {
+			 case 1: if (sommet->v.p.x > 1.5)sommet->v.p.x -= 1;
+				 break;
+			 case 2: if (sommet->v.p.x > 1.5 && (sommet->v.p.y < 3.5))
+			 {
+				 sommet->v.p.x -= 1;
+				 sommet->v.p.y += 1;
+			 } break;
+			 case 3:if (sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+				 break;
+			 case 4: if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+				 break;
+			 case 5: 
+				 if (sommet->v.p.y < 3.5 && (sommet->v.p.y > 1.5))
+				 {
+					 sommet->v.p.x += 1;
+					 sommet->v.p.y -= 1;
+				 }break;
+			 case 6: if (sommet->v.p.y > 1.5)sommet->v.p.y -= 1;
+				 break;
+			 }
+		 }
+		 else {
+			 if ((sommet->v.p.x < 2.5 && sommet->v.p.y < 2.5) || (sommet->v.p.x > 2.5 && sommet->v.p.y > 2.5)) {
+				 switch (r) {
+				 case 1: if (sommet->v.p.x >1.5)sommet->v.p.x -= 1;
+					 break;
+				 case 2: 
+					 if (sommet->v.p.y > 1.5 && (sommet->v.p.x > 1.5))
+					 {
+						 sommet->v.p.x -= 1;
+						 sommet->v.p.y -= 1;
+					 }break;
+				 case 3:if (sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+					 break;
+				 case 4: if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+					 break;
+				 case 5: 
+					 if (sommet->v.p.y < 3.5 && (sommet->v.p.x < 3.5))
+					 {
+						 sommet->v.p.x += 1;
+						 sommet->v.p.y += 1;
+					 }break;
+				 case 6:if (sommet->v.p.y >1.5) sommet->v.p.y -= 1;
+					 break;
+				 }
+			 }
+			 else {
+				 if (sommet->v.p.x < 2.5 && sommet->v.p.y == 2.5) {
+					 switch (r) {
+					 case 1: if (sommet->v.p.x > 1.5)sommet->v.p.x -= 1;
+						 break;
+					 case 2: 
+						 if (sommet->v.p.y < 3.5 && (sommet->v.p.x > 1.5))
+						 {
+							 sommet->v.p.x -= 1;
+							 sommet->v.p.y += 1;
+						 }break;
+					 case 3:if (sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+						 break;
+					 case 4: if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+						 break;
+					 case 5: 
+						 if (sommet->v.p.x > 1.5 && (sommet->v.p.y > 1.5))
+						 {
+							 sommet->v.p.x -= 1;
+							 sommet->v.p.y -= 1;
+						 }break;
+					 case 6:if (sommet->v.p.y >1.5) sommet->v.p.y -= 1;
+						 break;
+					 }
+				 }
+				 else {
+					 if (sommet->v.p.x > 2.5 && sommet->v.p.y == 2.5) {
+						 switch (r) {
+						 case 1: if (sommet->v.p.x>1.5)sommet->v.p.x -= 1;
+							 break;
+						 case 2: 
+							 if (sommet->v.p.y < 3.5 && (sommet->v.p.x < 3.5))
+							 {
+								 sommet->v.p.x += 1;
+								 sommet->v.p.y += 1;
+							 }break;
+						 case 3: if (sommet->v.p.y < 3.5)sommet->v.p.y += 1;
+							 break;
+						 case 4: if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+							 break;
+						 case 5: 
+							 if (sommet->v.p.y > 1.5 && (sommet->v.p.x < 3.5))
+							 {
+								 sommet->v.p.x += 1;
+								 sommet->v.p.y -= 1;
+							 }break;
+						 case 6:if (sommet->v.p.y >1.5) sommet->v.p.y -= 1;
+							 break;
+						 }
+					 }
+					 else {
+						 if (sommet->v.p.x < 2.5 && sommet->v.p.y == 2.5) {
+							 switch (r) {
+							 case 1: if (sommet->v.p.x >1.5)sommet->v.p.x -= 1;
+								 break;
+							 case 2: 
+								 if (sommet->v.p.y < 3.5 && (sommet->v.p.x < 3.5))
+								 {
+									 sommet->v.p.x += 1;
+									 sommet->v.p.y += 1;
+								 }break;
+							 case 3:if (sommet->v.p.y < 3.5) sommet->v.p.y += 1;
+								 break;
+							 case 4: if (sommet->v.p.x < 3.5)sommet->v.p.x += 1;
+								 break;
+							 case 5: 
+								 if (sommet->v.p.y > 1.5 && (sommet->v.p.x > 1.5))
+								 {
+									 sommet->v.p.x -= 1;
+									 sommet->v.p.y -= 1;
+								 }break;
+							 case 6: if (sommet->v.p.y >1.5)sommet->v.p.y -= 1;
+								 break;
+							 case 7: 
+								 if (sommet->v.p.y < 3.5 && (sommet->v.p.x > 1.5))
+								 {
+									 sommet->v.p.x -= 1;
+									 sommet->v.p.y += 1;
+								 }break;
+							 case 8:
+								 if (sommet->v.p.y > 1.5 && (sommet->v.p.x < 3.5))
+								 {
+									 sommet->v.p.x += 1;
+									 sommet->v.p.y -= 1;
+								 }break;
+							 }
+						 }
+					 }
+				 }
+			 }
+		 }
+	// }
 }
